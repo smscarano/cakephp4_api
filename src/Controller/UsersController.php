@@ -101,12 +101,12 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+        $result = ['result'=>0];
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
+            $result['result'] = 1;
+        } 
+        $this->viewBuilder()->setOption('serialize', 'result');
 
-        return $this->redirect(['action' => 'index']);
+        $this->set(compact('result'));
     }
 }
